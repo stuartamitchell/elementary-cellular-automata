@@ -179,16 +179,6 @@ public class ElementaryCellularAutomata
 		elemCA.completeHistory();
 		int[][] history = elemCA.getHistory();
 		
-		System.out.println("Rule: ");
-		int[] rule = elemCA.getRule();
-		
-		for (int i = 0; i < 8; i++)
-		{
-			System.out.print(rule[i]);
-		}
-		
-		System.out.println("\nOutput:\n");
-		
 		for (int i = 0; i < elemCA.getGenerations(); i++)
 		{
 			for (int j = 0; j <elemCA.getWidth(); j++)
