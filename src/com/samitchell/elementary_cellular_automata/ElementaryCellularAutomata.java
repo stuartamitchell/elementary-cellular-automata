@@ -39,10 +39,10 @@ public class ElementaryCellularAutomata
 			}
 		}
 		else
-		{
-			for (int i = 0; i < 31; i++)
+		{	
+			for (int i = 0; i < this.width; i++)
 			{
-				if (i == 16)
+				if (i == (this.width + 1) / 2)
 				{
 					currentState[i] = 1;
 				}
@@ -175,7 +175,7 @@ public class ElementaryCellularAutomata
 
 	public static void main(String[] args) 
 	{
-		ElementaryCellularAutomata elemCA = new ElementaryCellularAutomata();
+		ElementaryCellularAutomata elemCA = new ElementaryCellularAutomata(30, 60, 100, true);
 		elemCA.completeHistory();
 		int[][] history = elemCA.getHistory();
 		
