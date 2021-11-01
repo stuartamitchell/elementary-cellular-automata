@@ -26,6 +26,7 @@ public class OptionPanel extends JPanel
 		this.add(new JLabel("Rule"), gbc);
 		
 		this.rule = new JTextField(3);
+		rule.setText("30");
 		gbc.gridx = 1;
 		this.add(rule, gbc);
 		

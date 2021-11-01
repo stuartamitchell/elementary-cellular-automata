@@ -57,17 +57,6 @@ public class MainWindow extends JFrame implements ActionListener
 		this.setResizable(false);
 		this.setVisible(true);
 	}
-	
-	private void addImageToPanel(BufferedImage image)
-	{
-		this.imagePanel.removeAll();
-		this.imagePanel.add(new JLabel(new ImageIcon(image)));
-	}
-	
-	private void clearWhite(BufferedImage image)
-	{
-		
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -80,16 +69,8 @@ public class MainWindow extends JFrame implements ActionListener
 				JOptionPane.showMessageDialog(this, "Rule must be between 0 and 255", "Input error", JOptionPane.ERROR_MESSAGE);
 			}
 			else
-			{
-				int width = 500;
-				int height = 200;
-				
-				ElementaryCellularAutomata elemCA = new ElementaryCellularAutomata(rule, width, height, optionPanel.getRandom().isSelected());
-				elemCA.completeHistory();
-				BufferedImage image = elemCA.createImage();
-				
-				imagePanel.removeAll();
-				imagePanel.add(new JLabel(new ImageIcon(image)));
+			{	
+				this.drawRule(rule);
 				this.revalidate();
 			}
 		}
@@ -98,5 +79,20 @@ public class MainWindow extends JFrame implements ActionListener
 			error.printStackTrace();
 			JOptionPane.showMessageDialog(this, "Rule must be an integer.", "Input error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	private void addImageToPanel(BufferedImage image)
+	{
+		this.imagePanel.removeAll();
+		this.imagePanel.add(new JLabel(new ImageIcon(image)));
+	}
+	
+	private void drawRule(int rule)
+	{
+		ElementaryCellularAutomata elemCA = new ElementaryCellularAutomata(rule, this.width, this.height, optionPanel.getRandom().isSelected());
+		elemCA.completeHistory();
+		BufferedImage image = elemCA.createImage();
+		this.addImageToPanel(image);
+		this.revalidate();
 	}
 }
