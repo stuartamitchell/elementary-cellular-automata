@@ -30,16 +30,16 @@ public class ElementaryCellularAutomata
 		{
 			Random rand = new Random();
 			
-			for (int i = 0; i < 31; i++)
+			for (int i = 0; i < width; i++)
 			{
 				currentState[i] = rand.nextInt(2);
 			}
 		}
 		else
 		{
-			for (int i = 0; i < 31; i++)
+			for (int i = 0; i < width; i++)
 			{
-				if (i == 16)
+				if (i == (width + 1) / 2)
 				{
 					currentState[i] = 1;
 				}
@@ -166,10 +166,10 @@ public class ElementaryCellularAutomata
 	
 	public static void main(String[] args) 
 	{
-		int width = 31;
-		int height = 20;
-		int scale = 10;
-		int rule = 30;
+		int width = 500;
+		int height = 200;
+		int scale = 2;
+		int rule = 22;
 		
 		ElementaryCellularAutomata elemCA = new ElementaryCellularAutomata(rule, width, height, false);
 		elemCA.completeHistory();
