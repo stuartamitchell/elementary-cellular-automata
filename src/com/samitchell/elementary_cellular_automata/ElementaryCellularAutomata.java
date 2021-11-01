@@ -1,31 +1,28 @@
 package com.samitchell.elementary_cellular_automata;
 
 import java.util.Random;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 
 public class ElementaryCellularAutomata 
 {
 	private int[] rule;
-	private int generations;
+	private int height;
 	private int width;
 	private int[] currentState;
 	private int currentGeneration;
 	private int[][] history;
 	
-	public ElementaryCellularAutomata()
-	{
-		this(30, 31, 20, false);
-	}
-	
-	public ElementaryCellularAutomata(int ruleNo)
-	{
-		this(ruleNo, 31, 20, false);
-	}
-	
-	public ElementaryCellularAutomata(int ruleNo, int width, int generations, boolean random)
+	public ElementaryCellularAutomata(int ruleNo, int width, int height, boolean random)
 	{
 		this.rule = this.ruleFromInt(ruleNo);
 		this.width = width;
-		this.generations = generations;
+		this.height = height;
 		
 		this.currentState = new int[this.width];
 		
@@ -53,7 +50,7 @@ public class ElementaryCellularAutomata
 			}
 		}
 		
-		this.history = new int[this.generations][this.width];
+		this.history = new int[this.height][this.width];
 		this.history[0] = this.currentState;
 		this.currentGeneration = 1;
 	}
@@ -96,25 +93,44 @@ public class ElementaryCellularAutomata
 	
 	public void completeHistory()
 	{
-		for (int i = 1; i < this.generations; i++)
+		for (int i = 1; i < this.height; i++)
 		{
 			this.nextGeneration();
 		}
 	}
 	
-	public int getCurrentGeneration()
+	public BufferedImage createImage(int scale)
 	{
-		return this.currentGeneration;
-	}
-	
-	public int[] getCurrentState()
-	{
-		return this.currentState;
-	}
-	
-	public int getGenerations()
-	{
-		return this.generations;
+		int width = this.width * scale;
+		int height = this.height * scale;
+		
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		
+		Color white = new Color(255, 255, 255);
+		Color black = new Color(0, 0, 0);
+		int whiteRGB = white.getRGB();
+		int blackRGB = black.getRGB();
+		
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				int rgb;
+				
+				if (this.history[i / scale][j / scale] == 0)
+				{
+					rgb = whiteRGB;
+				}
+				else
+				{
+					rgb = blackRGB;
+				}
+				
+				image.setRGB(j,i,rgb);
+			}
+		}
+		
+		return image;
 	}
 	
 	public int[][] getHistory()
@@ -148,14 +164,26 @@ public class ElementaryCellularAutomata
 		return parents;
 	}
 	
-	public int[] getRule()
+	public static void main(String[] args) 
 	{
-		return this.rule;
-	}
-	
-	public int getWidth()
-	{
-		return this.width;
+		int width = 31;
+		int height = 20;
+		int scale = 10;
+		int rule = 30;
+		
+		ElementaryCellularAutomata elemCA = new ElementaryCellularAutomata(rule, width, height, false);
+		elemCA.completeHistory();
+		BufferedImage image = elemCA.createImage(scale);
+		
+		JFrame frame = new JFrame("Elementary Cellular Automata");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel imagePanel = new JPanel();
+		imagePanel.add(new JLabel(new ImageIcon(image)));
+		
+		frame.add(imagePanel);
+		frame.pack();
+		frame.setVisible(true);
 	}
 	
 	public void nextGeneration()
@@ -171,33 +199,6 @@ public class ElementaryCellularAutomata
 		this.currentState = nextState;
 		this.history[this.currentGeneration] = this.currentState;
 		this.currentGeneration++;
-	}
-
-	public static void main(String[] args) 
-	{
-		ElementaryCellularAutomata elemCA = new ElementaryCellularAutomata();
-		elemCA.completeHistory();
-		int[][] history = elemCA.getHistory();
-		
-		System.out.println("Rule: ");
-		int[] rule = elemCA.getRule();
-		
-		for (int i = 0; i < 8; i++)
-		{
-			System.out.print(rule[i]);
-		}
-		
-		System.out.println("\nOutput:\n");
-		
-		for (int i = 0; i < elemCA.getGenerations(); i++)
-		{
-			for (int j = 0; j <elemCA.getWidth(); j++)
-			{
-				System.out.print(history[i][j] + " ");
-			}
-			
-			System.out.print("\n");
-		}
 	}
 	
 	private int[] ruleFromInt(int decimal) 
@@ -221,15 +222,5 @@ public class ElementaryCellularAutomata
 		}
 		
 		return binary;
-	}
-	
-	public void setCurrentState(int[] state)
-	{
-		this.currentState = state;
-	}
-	
-	public void setRule(int ruleNo)
-	{
-		this.rule = this.ruleFromInt(ruleNo);
 	}
 }
