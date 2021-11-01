@@ -99,8 +99,9 @@ public class ElementaryCellularAutomata
 		}
 	}
 	
-	public BufferedImage createImage(int scale)
+	public BufferedImage createImage()
 	{
+		int scale = 2;
 		int width = this.width * scale;
 		int height = this.height * scale;
 		
@@ -142,20 +143,19 @@ public class ElementaryCellularAutomata
 	{
 		int[] parents = new int[3];
 		
-		if (i == 0)
+		if (i == 0) 
 		{
 			parents[0] = currentState[this.width-1];
 			parents[1] = currentState[0];
 			parents[2] = currentState[1];
-		}
-		else if (i == this.width - 1)
+		} 
+		else if (i == this.width - 1) 
 		{
 			parents[0] = currentState[this.width - 2];
 			parents[1] = currentState[this.width - 1];
 			parents[2] = currentState[0];
-		}
-		else
-		{
+		} 
+		else {
 			parents[0] = currentState[i - 1];
 			parents[1] = currentState[i];
 			parents[2] = currentState[i + 1];
@@ -165,28 +165,11 @@ public class ElementaryCellularAutomata
 	}
 	
 	public static void main(String[] args) 
-	{
-		int width = 500;
-		int height = 200;
-		int scale = 2;
-		int rule = 22;
-		
-		ElementaryCellularAutomata elemCA = new ElementaryCellularAutomata(rule, width, height, false);
-		elemCA.completeHistory();
-		BufferedImage image = elemCA.createImage(scale);
-		
-		JFrame frame = new JFrame("Elementary Cellular Automata");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JPanel imagePanel = new JPanel();
-		imagePanel.add(new JLabel(new ImageIcon(image)));
-		
-		frame.add(imagePanel);
-		frame.pack();
-		frame.setVisible(true);
+	{		
+		MainWindow mainWindow = new MainWindow("Elementary Cellular Automata");	
 	}
 	
-	public void nextGeneration()
+	public void nextGeneration() 
 	{
 		int[] nextState = new int[this.width];
 		
