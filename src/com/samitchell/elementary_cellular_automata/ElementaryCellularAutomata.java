@@ -145,7 +145,7 @@ public class ElementaryCellularAutomata
 		
 		if (i == 0) 
 		{
-			parents[0] = currentState[this.width-1];
+			parents[0] = currentState[this.width - 1];
 			parents[1] = currentState[0];
 			parents[2] = currentState[1];
 		} 
