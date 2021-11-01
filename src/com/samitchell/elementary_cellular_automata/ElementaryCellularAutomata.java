@@ -1,10 +1,6 @@
 package com.samitchell.elementary_cellular_automata;
 
 import java.util.Random;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
